@@ -23,4 +23,4 @@ Add this to your Gemfile:
 
 Add this to any HTML page:
 
-    <canvas id="tetris" width="300" height="800"></canvas>
+    <canvas id="tetris" width="200" height="360"></canvas>
