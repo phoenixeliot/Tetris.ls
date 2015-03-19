@@ -137,7 +137,6 @@ class Tetris
   is-lost: ->
     @piece-pos.r == 0 && @is-colliding!
 
-
 $ ->
   t = new Tetris
   t.start!
