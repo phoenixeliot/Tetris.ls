@@ -61,7 +61,7 @@ class Tetris
     r >= 0 && r <= max-row && c >= 0 && c <= max-col
   drop: ->
     while @move-down! then;
-    /* Loop until error is thrown */
+    /* Loop until return value is false */
     @glue-piece!
   clear-rows: ->
     rows-to-clear = []
