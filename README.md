@@ -6,6 +6,9 @@ Play it on [my portfolio site].
 [my portfolio site]: http://peterjeliot.com/tetris
 [LiveScript]: http://livescript.net
 
+#### What it is
+* Super short — only 142 lines!
+
 #### What it isn't
 * Object-oriented
 * Fully-featured (you can't technically win or lose; restarting consists of reloading the page)
