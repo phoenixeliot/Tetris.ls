@@ -2,16 +2,19 @@ import prelude
 
 class Tetris
   ->
-    @canvas = document.get-element-by-id "tetris" .get-context "2d"
     @num-rows = 18
     @num-cols = 10
     @grid = [[0 for i from 1 to @num-cols] for j from 1 to @num-rows]
     @cur-piece = @random-piece!
     @piece-pos = { r: 0, c: @num-cols/2 - 1 }
   start: ->
-    set-interval @step, 1000
-    @bind-keys!
-    @draw!
+    try
+      @canvas = document.get-element-by-id "tetris" .get-context "2d"
+      set-interval @step, 1000
+      @bind-keys!
+      @draw!
+    catch e
+      throw "Tetris: disabled (no canvas#tetris element)"
   pieces:
       [[1 1]
        [1 1]]
@@ -140,4 +143,7 @@ class Tetris
 
 $ ->
   t = new Tetris
-  t.start!
+  try
+    t.start!
+  catch e
+    console.log e
