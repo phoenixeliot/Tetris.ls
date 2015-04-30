@@ -1,7 +1,8 @@
 import prelude
 
 class Tetris
-  ->
+  (options) ->
+    @colors = options.colors
     @num-rows = 18
     @num-cols = 10
     @grid = [[0 for i from 1 to @num-cols] for j from 1 to @num-rows]
@@ -9,7 +10,7 @@ class Tetris
     @piece-pos = { r: 0, c: @num-cols/2 - 1 }
   start: ->
     try
-      @canvas = document.get-element-by-id "tetris" .get-context "2d"
+      @canvas = document.querySelector ".tetris canvas" .get-context "2d"
       set-interval @step, 1000
       @bind-keys!
       @draw!
@@ -117,23 +118,23 @@ class Tetris
     for row, r in @grid
       for val, c in row
         color = switch
-          | @grid[r][c]  => "red"
-          | !@grid[r][c] => "lightgray"
+          | @grid[r][c]  => @colors.wall
+          | !@grid[r][c] => @colors.background
         @draw-square({ r: r, c: c }, color)
-  draw-piece: (pos ? @piece-pos, piece ? @cur-piece, piece-color ? "blue") ->
+  draw-piece: (pos ? @piece-pos, piece ? @cur-piece, piece-color) ->
     for row, dr in piece
       for col, dc in row
-        color = switch
-          | piece[dr][dc]  => piece-color
-          | !piece[dr][dc] => "transparent"
         r = dr + pos.r
         c = dc + pos.c
+        color = switch
+          | piece[dr][dc]  => piece-color ? @colors.piece
+          | !piece[dr][dc] => "transparent"
         @draw-square({r: r, c: c}, color)
   draw-prediction: ->
     pos = ^^@piece-pos
     while @move { dr: +1 }, pos
       pos = that
-    @draw-piece pos, @cur-piece, "orange"
+    @draw-piece pos, @cur-piece, @colors.prediction
   check-lose: ->
     if @is-lost!
       console.log("You lose :(")
@@ -141,8 +142,14 @@ class Tetris
     @piece-pos.r == 0 && @is-colliding!
 
 
+
 $ ->
-  t = new Tetris
+  t = new Tetris do
+    colors:
+      background: 'black'
+      piece: '#080'
+      prediction: '#800'
+      wall: '#F00'
   try
     t.start!
   catch e
